@@ -19,18 +19,17 @@ with macros.open('r') as f:
 
 with snippets.open('w') as f:
     for L in macros_lines:
-        if (L[0] == '\\'):
-            for prefix in possibilities_compiled:
-                searched = prefix.search(L)
-                if searched != None:
-                    name = searched.group(1)
-                    if prefix in possible_commands_compiled:
-                        f.writelines('\t"'+name+'": {\n'+'\t\t"prefix": "'+name+'",\n'+'\t\t"body": "\\\\'+name+'"\n'+'\t},\n'+'\n')
-                    else:
-                        count_search = variable_count_search.search(L)
-                        if count_search != None:
-                            count = int(count_search.group(1))
-                            suffix = ''
-                            for i in range(count):
-                                suffix += '\\{\\$'+str(i)+'\\}'
-                            f.writelines('\t"'+name+'": {\n'+'\t\t"prefix": "'+name+'",\n'+'\t\t"body": "\\\\'+name+suffix+'$0"\n'+'\t},\n'+'\n')
+        for prefix in possibilities_compiled:
+            searched = prefix.search(L)
+            if searched != None:
+                name = searched.group(1)
+                if prefix in possible_commands_compiled:
+                    f.writelines('\t"'+name+'": {\n'+'\t\t"prefix": "'+name+'",\n'+'\t\t"body": "\\\\'+name+'"\n'+'\t},\n'+'\n')
+                else:
+                    count_search = variable_count_search.search(L)
+                    if count_search != None:
+                        count = int(count_search.group(1))
+                        suffix = ''
+                        for i in range(count):
+                            suffix += '\\{\\$'+str(i)+'\\}'
+                        f.writelines('\t"'+name+'": {\n'+'\t\t"prefix": "'+name+'",\n'+'\t\t"body": "\\\\'+name+suffix+'$0"\n'+'\t},\n'+'\n')
