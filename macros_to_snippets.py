@@ -1,4 +1,3 @@
-# This script takes a macros file (.txt) with macros of the form '\nc{\A}{\mathbf{A}}' and returns a snippet file (.txt) to be pasted in the (.json) snippet file in vscode
 from pathlib import Path
 import re
 
@@ -22,27 +21,3 @@ with snippets.open('w') as f:
                     f.writelines('\t\t"body": "\\\\'+name+'"\n')
                     f.writelines('\t},\n')
                     f.writelines('\n')
-
-
-
-
-
-
-
-
-
-
-
-
-#extract_command = re.compile('\\{\\\\'+name+'\\}\\{([\w,\W]*)\\}')
-#command_test = (extract_command.search(L))
-#if command_test == None:
-#    print(name)
-#else:
-#    command_latex = command_test.group(1)                            # latex command to execute. Need to double the '\' for json.
-#    command = ''
-#    for c in command_latex:
-#        if c=='\\':
-#            command += '\\\\'
-#        else:
-#            command += c
