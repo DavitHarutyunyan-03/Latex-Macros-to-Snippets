@@ -1,4 +1,3 @@
-# This script takes a macros file (.txt) with macros of the form '\nc{\A}{\mathbf{A}}' and returns a snippet file (.txt) to be pasted in the (.json) snippet file in vscode
 from pathlib import Path
 import re
 
