@@ -12,8 +12,8 @@ possibilities_compiled = possible_commands_compiled+possible_environments_compil
 variable_count_search = re.compile('\[([\d])\]')
 
 # Path
-macros = Path(__file__).with_name('macros.txt')
-snippets = Path(__file__).with_name('snippets.txt')
+macros = Path(__file__).with_name('macros.tex')
+snippets = Path(__file__).with_name('latex.json')
 
 # Extracting macros
 with macros.open('r') as f:
@@ -21,6 +21,7 @@ with macros.open('r') as f:
 
 # Writing the snippet
 with snippets.open('w+') as f:
+    f.writelines('{\n\n')
     for L in macros_lines:
         for prefix in possibilities_compiled:
             searched = prefix.search(L)
@@ -34,5 +35,6 @@ with snippets.open('w+') as f:
                         count = int(count_search.group(1))
                         suffix = ''
                         for i in range(count):
-                            suffix += '\\{\\$'+str(i)+'\\}'
+                            suffix += '{$'+str(i+1)+'}'
                         f.writelines('\t"'+name+'": {\n'+'\t\t"prefix": "'+name+'",\n'+'\t\t"body": "\\\\'+name+suffix+'$0"\n'+'\t},\n'+'\n')
+    f.writelines('\n}')
