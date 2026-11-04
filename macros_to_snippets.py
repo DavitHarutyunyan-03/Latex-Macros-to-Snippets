@@ -17,7 +17,7 @@ snippets = Path(__file__).with_name('snippets.txt')
 with macros.open('r') as f:
     macros_lines = f.readlines()
 
-with snippets.open('w') as f:
+with snippets.open('w+') as f:
     for L in macros_lines:
         for prefix in possibilities_compiled:
             searched = prefix.search(L)
