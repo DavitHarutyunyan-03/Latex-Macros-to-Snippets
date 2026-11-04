@@ -1,21 +1,25 @@
 from pathlib import Path
 import re
 
+# User's input
 possible_commands_string = ['nc', 'renc', 'newcommand', 'renewcommand']   # add your own used prefixes to define new commands
 possible_environments_string = ['newenv', 'renewenv', 'nenv', 'renenv', 'newenvironment', 'renewenvironment']   # add your own used prefixes to define new environments 
 
+# Compiled regexes
 possible_commands_compiled = [re.compile('\\\\'+p+'\\{\\\\([a-zA-Z]*)\\}') for p in possible_commands_string]
 possible_environments_compiled = [re.compile('\\\\'+p+'\\{([a-zA-Z]*)\\}') for p in possible_environments_string]
 possibilities_compiled = possible_commands_compiled+possible_environments_compiled
-
 variable_count_search = re.compile('\[([\d])\]')
 
+# Path
 macros = Path(__file__).with_name('macros.txt')
 snippets = Path(__file__).with_name('snippets.txt')
 
+# Extracting macros
 with macros.open('r') as f:
     macros_lines = f.readlines()
 
+# Writing the snippet
 with snippets.open('w+') as f:
     for L in macros_lines:
         for prefix in possibilities_compiled:
